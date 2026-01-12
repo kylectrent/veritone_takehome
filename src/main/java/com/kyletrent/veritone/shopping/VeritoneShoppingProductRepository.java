@@ -1,5 +1,7 @@
 package com.kyletrent.veritone.shopping;
 
-public class VeritoneShoppingProductRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface VeritoneShoppingProductRepository extends JpaRepository<VeritoneShoppingProduct, Long> { 
     
 }
