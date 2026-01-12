@@ -3,6 +3,7 @@ package com.kyletrent.veritone.shopping;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +27,10 @@ public class VeritoneShoppingProductController {
 
     @GetMapping
     public List<VeritoneShoppingProduct> getAllVeritoneShoppingProducts() {
-        return veritoneShoppingProductRepository.findAll();
+
+        // Sort by most recently created or updated
+        return veritoneShoppingProductRepository.findAll(
+                Sort.by(Sort.Direction.DESC, "updatedAt"));
     }
 
     @PostMapping
@@ -55,5 +59,12 @@ public class VeritoneShoppingProductController {
         }
         veritoneShoppingProductRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Not UI requirement but standard REST
+    @GetMapping("/{id}")
+    public VeritoneShoppingProduct getById(@PathVariable Long id) {
+        return veritoneShoppingProductRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
     }
 }
