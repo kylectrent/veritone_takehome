@@ -5,7 +5,7 @@ services:
     image: kylectrent/java_app:1.0.0
 
     # Build the image using the Dockerfile in the current directory
-    build: .
+    build: ./backend
 
     # Expose the Spring Boot application on localhost:8080
     ports:
@@ -14,11 +14,11 @@ services:
     # Environment variables used by Spring Boot to configure the datasource
     # NOTE: 'java_db' is the Docker Compose service name, which acts as the hostname
     environment:
-      - DATABASE_URL=jdbc:postgresql://java_db:5432/shopping
-      - DATABASE_USERNAME=shopping
-      - DATABASE_PASSWORD=shopping
+      DATABASE_URL: jdbc:postgresql://java_db:5432/shopping
+      DATABASE_USERNAME: shopping
+      DATABASE_PASSWORD: shopping
 
-      # Ensure the database is healthy before starting the API
+    # Ensure the database is healthy before starting the API
     depends_on:
       java_db:
         condition: service_healthy

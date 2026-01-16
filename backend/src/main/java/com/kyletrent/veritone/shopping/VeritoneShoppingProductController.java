@@ -29,6 +29,7 @@ public class VeritoneShoppingProductController {
     // Use constructor injection for easier composition of test suites
     private final VeritoneShoppingProductRepository veritoneShoppingProductRepository;
 
+    // Spring can see this class is a RestController bean, and using the 'hidden' bean created for the repo, autowires this repo 
     public VeritoneShoppingProductController(VeritoneShoppingProductRepository veritoneShoppingProductRepository) {
         this.veritoneShoppingProductRepository = veritoneShoppingProductRepository;
     }
