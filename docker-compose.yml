@@ -1,19 +1,55 @@
 services:
+  # Spring Boot backend application
+  java_app:
+    # Name + tag for the built application image
+    image: kylectrent/java_app:1.0.0
+
+    # Build the image using the Dockerfile in the current directory
+    build: .
+
+    # Expose the Spring Boot application on localhost:8080
+    ports:
+      - 8080:8080
+
+    # Environment variables used by Spring Boot to configure the datasource
+    # NOTE: 'java_db' is the Docker Compose service name, which acts as the hostname
+    environment:
+      - DATABASE_URL=jdbc:postgresql://java_db:5432/shopping
+      - DATABASE_USERNAME=shopping
+      - DATABASE_PASSWORD=shopping
+
+      # Ensure the database is healthy before starting the API
+    depends_on:
+      java_db:
+        condition: service_healthy
+
+  # PostgreSQL database container
   java_db:
-    container_name: java_db
+    
+    # Official PostgreSQL image
     image: postgres:17
+
+    # Expose Postgres for local tools (e.g., TablePlus, psql)
     ports:
       - 5432:5432
+
+    # Database credentials and initial database name
     environment:
       POSTGRES_PASSWORD: shopping
       POSTGRES_USER: shopping
       POSTGRES_DB: shopping
+
+    # Persist database data across container restarts
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+    # Health check used by the API service to wait for Postgres readiness
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U shopping -d shopping"]
       interval: 5s
       timeout: 5s
       retries: 5
+
+# Named volume for PostgreSQL data persistence
 volumes:
   pgdata: {}

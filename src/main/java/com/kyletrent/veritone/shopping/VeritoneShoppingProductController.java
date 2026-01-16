@@ -16,39 +16,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.kyletrent.veritone.shopping.dto.ShoppingProductRequest;
+import com.kyletrent.veritone.shopping.dto.ShoppingProductResponse;
+import com.kyletrent.veritone.shopping.mapper.ShoppingProductMapper;
+
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/shopping")
 public class VeritoneShoppingProductController {
 
-    @Autowired
-    private VeritoneShoppingProductRepository veritoneShoppingProductRepository;
+    // Use constructor injection for easier composition of test suites
+    private final VeritoneShoppingProductRepository veritoneShoppingProductRepository;
+
+    public VeritoneShoppingProductController(VeritoneShoppingProductRepository veritoneShoppingProductRepository) {
+        this.veritoneShoppingProductRepository = veritoneShoppingProductRepository;
+    }
 
     @GetMapping
-    public List<VeritoneShoppingProduct> getAllVeritoneShoppingProducts() {
+    public List<ShoppingProductResponse> getAllVeritoneShoppingProducts() {
 
         // Sort by most recently created or updated
-        return veritoneShoppingProductRepository.findAll(
-                Sort.by(Sort.Direction.DESC, "updatedAt"));
+        return veritoneShoppingProductRepository
+                .findAll(Sort.by(Sort.Direction.DESC, "updatedAt"))
+                .stream()
+                .map(ShoppingProductMapper::toResponse)
+                .toList();
     }
 
     @PostMapping
-    public VeritoneShoppingProduct createVeritoneShoppingProduct(
-            @Valid @RequestBody VeritoneShoppingProduct veritoneShoppingProduct) {
-        return veritoneShoppingProductRepository.save(veritoneShoppingProduct);
+    public ShoppingProductResponse createVeritoneShoppingProduct(
+            @Valid @RequestBody ShoppingProductRequest request) {
+
+        VeritoneShoppingProduct entity = ShoppingProductMapper.toEntity(request);
+        VeritoneShoppingProduct saved = veritoneShoppingProductRepository.save(entity);
+
+        return ShoppingProductMapper.toResponse(saved);
     }
 
     @PutMapping("/{id}")
-    public VeritoneShoppingProduct updateVeritoneShoppingProduct(@PathVariable Long id,
-            @Valid @RequestBody VeritoneShoppingProduct veritoneShoppingProduct) {
+    public ShoppingProductResponse updateVeritoneShoppingProduct(@PathVariable Long id,
+            @Valid @RequestBody ShoppingProductRequest request) {
+
         VeritoneShoppingProduct existingVeritoneShoppingProduct = veritoneShoppingProductRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
-        existingVeritoneShoppingProduct.setName(veritoneShoppingProduct.getName());
-        existingVeritoneShoppingProduct.setDescription(veritoneShoppingProduct.getDescription());
-        existingVeritoneShoppingProduct.setQuantity(veritoneShoppingProduct.getQuantity());
-        existingVeritoneShoppingProduct.setPurchased(veritoneShoppingProduct.isPurchased());
-        return veritoneShoppingProductRepository.save(existingVeritoneShoppingProduct);
+
+        ShoppingProductMapper.apply(existingVeritoneShoppingProduct, request);
+        VeritoneShoppingProduct saved = veritoneShoppingProductRepository.save(existingVeritoneShoppingProduct);
+
+        return ShoppingProductMapper.toResponse(saved);
     }
 
     @DeleteMapping("/{id}")
@@ -63,8 +79,10 @@ public class VeritoneShoppingProductController {
 
     // Not UI requirement but standard REST
     @GetMapping("/{id}")
-    public VeritoneShoppingProduct getById(@PathVariable Long id) {
-        return veritoneShoppingProductRepository.findById(id)
+    public ShoppingProductResponse getById(@PathVariable Long id) {
+        VeritoneShoppingProduct veritoneShoppingProduct = veritoneShoppingProductRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+
+        return ShoppingProductMapper.toResponse(veritoneShoppingProduct);
     }
 }
