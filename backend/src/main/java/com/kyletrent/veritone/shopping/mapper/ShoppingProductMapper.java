@@ -32,6 +32,6 @@ public final class ShoppingProductMapper {
         e.setName(r.name());
         e.setDescription(r.description());
         e.setQuantity(r.quantity());
-        e.setPurchased(r.purchased());
+        e.setPurchased(Boolean.TRUE.equals(r.purchased()));
     }
 }

@@ -73,6 +73,18 @@ The backend serves as the single source of truth for data contracts.
 
     - API clients and/or React Query hooks
 
+**When springboot server is running, from root**
+
+```bash
+./scripts/export-openapi.sh
+```
+
+**After openapi.json has been generated, from frontend directory**
+
+```bash
+npm run gen:api
+```
+
 This approach prevents contract drift across the stack and provides a schema-driven workflow similar in spirit to GraphQL or Smithy, while remaining REST-based.
 
 ---

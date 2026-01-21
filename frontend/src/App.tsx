@@ -6,6 +6,8 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
+  // call get api/shopping get and display list below
+
   return (
     <>
       <div>

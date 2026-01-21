@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,8 @@ import com.kyletrent.veritone.shopping.dto.ShoppingProductRequest;
 import com.kyletrent.veritone.shopping.dto.ShoppingProductResponse;
 import com.kyletrent.veritone.shopping.mapper.ShoppingProductMapper;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -34,7 +37,7 @@ public class VeritoneShoppingProductController {
         this.veritoneShoppingProductRepository = veritoneShoppingProductRepository;
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ShoppingProductResponse> getAllVeritoneShoppingProducts() {
 
         // Sort by most recently created or updated
@@ -45,7 +48,7 @@ public class VeritoneShoppingProductController {
                 .toList();
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ShoppingProductResponse createVeritoneShoppingProduct(
             @Valid @RequestBody ShoppingProductRequest request) {
 
@@ -54,8 +57,8 @@ public class VeritoneShoppingProductController {
 
         return ShoppingProductMapper.toResponse(saved);
     }
-
-    @PutMapping("/{id}")
+    
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ShoppingProductResponse updateVeritoneShoppingProduct(@PathVariable Long id,
             @Valid @RequestBody ShoppingProductRequest request) {
 
@@ -69,6 +72,7 @@ public class VeritoneShoppingProductController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiResponse(responseCode = "204", description = "Deleted")
     public ResponseEntity<Void> deleteVeritoneShoppingProduct(@PathVariable Long id) {
         if (!veritoneShoppingProductRepository.existsById(id)) {
             // Spring will return this as a 404 ex
@@ -79,7 +83,7 @@ public class VeritoneShoppingProductController {
     }
 
     // Not UI requirement but standard REST
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ShoppingProductResponse getById(@PathVariable Long id) {
         VeritoneShoppingProduct veritoneShoppingProduct = veritoneShoppingProductRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
