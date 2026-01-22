@@ -23,6 +23,13 @@ services:
       java_db:
         condition: service_healthy
 
+    # Healthcheck used by front end to wait for back end app readiness
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/actuator/health | grep -q '\"status\":\"UP\"'"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   # PostgreSQL database container
   java_db:
     
@@ -49,6 +56,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 5173:80
+    depends_on:
+      java_app:
+        condition: service_healthy
 
 # Named volume for PostgreSQL data persistence
 volumes:

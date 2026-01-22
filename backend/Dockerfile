@@ -20,9 +20,12 @@ FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /app
 
+# Install cURL for the health check in docker compose
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 # Copy the Spring Boot executable JAR built by Maven into the container
 # This JAR contains the application code and all runtime dependencies
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=BUILD /app/target/*.jar app.jar
 
 # Expose the port used by the Spring Boot application
 EXPOSE 8080
