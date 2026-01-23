@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import './App.css'
 import { useShoppingList } from './features/shopping/api/hooks'
 import NavBar from './features/shopping/components/NavBar';
 
@@ -11,7 +10,7 @@ function App() {
   console.log(items);
 
   return (
-    <Box>
+    <Box height={'100vh'}>
       <NavBar />
     </Box>
   )

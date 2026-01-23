@@ -39,6 +39,12 @@ This will start:
 
 - A frontend service running either a Vite development server (with hot module replacement) or an Nginx server serving a prebuilt production bundle, depending on the selected Docker Compose profile
 
+sync the container’s deps to whatever is in ./frontend/package.json + lockfile:
+- docker compose exec frontend-dev npm install
+
+restart vite
+- docker compose restart frontend-dev
+
 ---
 
 ## Backend Architecture

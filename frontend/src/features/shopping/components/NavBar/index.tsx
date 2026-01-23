@@ -1,14 +1,14 @@
 
 
-import { Stack, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 function NavBar() {
   return (
-    <Stack>
+    <Box bgcolor={'primary.main'}>
         <Typography variant={'veritoneLarge'}>
             SHOPPING LIST
         </Typography>
-    </Stack>
+    </Box>
   )
 }
 
