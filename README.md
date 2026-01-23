@@ -89,6 +89,19 @@ This approach prevents contract drift across the stack and provides a schema-dri
 
 ---
 
+## Fontend Architecture
+
+- On the font end we have prod mode which serves a built static bundle via nginx as the proxy
+
+    - This will not have hot reload as we have to rebuild the image in order to see changes made while developing
+
+- We have a dev mode which runs a Vite dev server
+
+    - Frontend dockerfile supports a dev target
+
+    - Compose bind mount so container can see local file edits
+
+
 ## Design Philosophy
 
 - Clear separation between persistence models (JPA entities) and API contracts (DTOs)
