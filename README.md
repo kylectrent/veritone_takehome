@@ -19,10 +19,16 @@ The entire backend stack is containerized using Docker.
 
 **Start the backend**
 
-From the project root:
+From the project root (dev mode):
 
 ```bash
-docker compose up --build
+docker compose --profile dev up --build
+```
+
+From the project root (prod mode):
+
+```bash
+docker compose --profile prod up --build
 ```
 
 This will start:
@@ -30,6 +36,8 @@ This will start:
 - A Spring Boot API on http://localhost:8080
 
 - A PostgreSQL database with persisted storage via Docker volumes
+
+- A frontend service running either a Vite development server (with hot module replacement) or an Nginx server serving a prebuilt production bundle, depending on the selected Docker Compose profile
 
 ---
 
@@ -89,18 +97,31 @@ This approach prevents contract drift across the stack and provides a schema-dri
 
 ---
 
-## Fontend Architecture
+## Frontend Runtime Modes
 
-- On the font end we have prod mode which serves a built static bundle via nginx as the proxy
+The frontend supports two runtime modes: development and production, each optimized for a different stage of the workflow.
 
-    - This will not have hot reload as we have to rebuild the image in order to see changes made while developing
+**Production Mode**
 
-- We have a dev mode which runs a Vite dev server
+- Serves a prebuilt static bundle using Nginx
 
-    - Frontend dockerfile supports a dev target
+- The frontend is built during the Docker image build step and copied into the Nginx container
 
-    - Compose bind mount so container can see local file edits
+- Intended for production and production-like environments
 
+- No hot reload — UI changes require rebuilding the Docker image and restarting the container
+
+**Development Mode**
+
+- Runs a Vite development server inside a Docker container
+
+- The frontend Dockerfile includes a dedicated dev build target
+
+- Source code is bind-mounted from the host into the container, allowing the dev server to detect local file changes
+
+- Supports hot module replacement (HMR) for rapid UI iteration without rebuilding images
+
+---
 
 ## Design Philosophy
 
