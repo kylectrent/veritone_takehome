@@ -45,6 +45,9 @@ sync the container’s deps to whatever is in ./frontend/package.json + lockfile
 restart vite
 - docker compose restart frontend-dev
 
+view logs for java_app
+- docker compose logs -f java_app
+
 ---
 
 ## Backend Architecture

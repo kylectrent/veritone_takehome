@@ -30,6 +30,12 @@ services:
       timeout: 3s
       retries: 10
 
+    # Add an alias for the front end vite dev proxy
+    networks:
+      default:
+        aliases:
+          - java-app
+
   # PostgreSQL database container
   java_db:
     

@@ -1,11 +1,15 @@
 
 
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, type BoxProps } from '@mui/material'
 
-function NavBar() {
+interface NavBarProps extends BoxProps {}
+
+function NavBar(props: NavBarProps) {
+  const { children, ...boxProps } = props;
+
   return (
-    <Box bgcolor={'primary.main'}>
-        <Typography variant={'veritoneLarge'}>
+    <Box bgcolor={'primary.main'} {...boxProps} display={'flex'} alignItems={'center'} >
+        <Typography variant={'veritoneLarge'} color='white' pl={2.75}>
             SHOPPING LIST
         </Typography>
     </Box>

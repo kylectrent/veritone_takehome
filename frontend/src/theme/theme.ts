@@ -11,10 +11,18 @@ const theme = createTheme({
         },
         text: {
             primary: "#0f172a",
-            secondary: "#475569",
+            secondary: "#87898C",
         },
         background: {
             default: "#f8fafc",
+        },
+        border: {
+            primary: "#C6C6C6",
+            secondary: "#E0E0E0",
+        },
+        veritoneLight: {
+            main: "#1871E8",
+            contrastText: "#fff",
         },
     },
 
@@ -27,6 +35,44 @@ const theme = createTheme({
             lineHeight: "100%",
             letterSpacing: "0.25px",
             textTransform: "uppercase",
+        },
+        veritoneNunito: {
+            fontFamily: "Nunito",
+            fontWeight: 400,
+            fontSize: "18px",
+            lineHeight: "24px",
+            letterSpacing: "0px",
+            textAlign: "center",
+        },
+        veritoneNunitoSmall: {
+            fontFamily: "Nunito",
+            fontWeight: 600,
+            fontSize: "14px",
+            lineHeight: "20px",
+            letterSpacing: "0px",
+            textAlign: "center",
+        },
+    },
+
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 4,
+                    overflow: "hidden",
+                    textTransform: "none",
+                    padding: "8px 16px",
+                    "& .MuiTouchRipple-root": {
+                        borderRadius: 4,
+                    },
+                    "&::before": {
+                        borderRadius: 4,
+                    },
+                    "&::after": {
+                        borderRadius: 4,
+                    },
+                },
+            },
         },
     },
 
