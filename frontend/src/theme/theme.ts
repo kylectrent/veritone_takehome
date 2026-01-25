@@ -52,6 +52,14 @@ const theme = createTheme({
             letterSpacing: "0px",
             textAlign: "center",
         },
+        Nunito18pxSemiBold: {
+            fontFamily: "Nunito",
+            fontWeight: 600,
+            fontSize: "18px",
+            lineHeight: "24px",
+            letterSpacing: "0px",
+            textAlign: "center",
+        },
     },
 
     components: {

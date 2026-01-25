@@ -6,12 +6,16 @@ declare module "@mui/material/styles" {
     veritoneLarge: React.CSSProperties;
     veritoneNunito: React.CSSProperties;
     veritoneNunitoSmall: React.CSSProperties;
+    Nunito18pxSemiBold: React.CSSProperties;
+
+
   }
 
   interface TypographyVariantsOptions {
     veritoneLarge?: React.CSSProperties;
     veritoneNunito?: React.CSSProperties;
     veritoneNunitoSmall?: React.CSSProperties;
+    Nunito18pxSemiBold?: React.CSSProperties;
   }
 }
 declare module "@mui/material/Typography" {
@@ -19,6 +23,7 @@ declare module "@mui/material/Typography" {
     veritoneLarge: true;
     veritoneNunito: true;
     veritoneNunitoSmall: true;
+    Nunito18pxSemiBold: true;
   }
 }
 

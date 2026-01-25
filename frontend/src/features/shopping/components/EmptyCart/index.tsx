@@ -3,6 +3,8 @@ import VeritoneButton from '../VeritoneButton'
 
 export interface EmptyCartProps extends BoxProps { }
 
+
+
 function EmptyCart(props: EmptyCartProps) {
   return (
     <Box {...props} width={614} height={290} border={1} borderColor={'border.primary'}>
