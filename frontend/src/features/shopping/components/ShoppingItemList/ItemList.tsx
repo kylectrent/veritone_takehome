@@ -1,8 +1,26 @@
-import React from 'react'
+import { Box, Paper, Stack, type StackProps } from '@mui/material'
+import type { ShoppingProductResponse } from '../../../../api/model';
+import ShoppingListItem from './ShoppingListItem';
 
-function ItemList() {
+export interface ItemListProps extends StackProps {
+  list: ShoppingProductResponse[];
+}
+
+function ItemList({ list, ...props }: ItemListProps) {
   return (
-    <div>ItemList</div>
+    <Stack {...props} gap={1}>
+      {
+        list.map((item) => (
+          <Paper>
+            <Box key={item.id}>
+              <ShoppingListItem
+                item={item}
+              />
+            </Box>
+          </Paper>
+        ))
+      }
+    </Stack>
   )
 }
 

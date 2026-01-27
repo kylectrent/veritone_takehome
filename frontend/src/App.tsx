@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import { useShoppingList } from './features/shopping/api/hooks'
 import NavBar from './features/shopping/components/NavBar';
 import EmptyCart from './features/shopping/components/EmptyCart';
+import ShoppingItemList from './features/shopping/components/ShoppingItemList';
 
 function App() {
 
@@ -14,7 +15,14 @@ function App() {
     <Box height={'100vh'}>
       <NavBar height={64} />
       <Box display={'flex'} justifyContent={'center'} >
-        <EmptyCart mt={21.75}/>
+        {
+          items.length === 0 ?
+            <EmptyCart mt={21.75} />
+            :
+            <ShoppingItemList>
+              <ShoppingItemList.ItemList list={items} />
+            </ShoppingItemList>
+        }
       </Box>
     </Box>
   )

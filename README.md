@@ -48,6 +48,9 @@ restart vite
 view logs for java_app
 - docker compose logs -f java_app
 
+Install front end deps inside the container volume
+- docker compose exec frontend-dev npm install
+
 ---
 
 ## Backend Architecture
