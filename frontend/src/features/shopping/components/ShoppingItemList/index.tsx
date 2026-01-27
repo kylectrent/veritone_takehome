@@ -2,6 +2,7 @@ import { Box, Stack, Typography, type BoxProps } from '@mui/material'
 import { ShoppingItemListProvider } from '../../context/ShoppingItemListContext'
 import VeritoneButton from '../VeritoneButton'
 import ItemList from './ItemList';
+import ShoppingItemListModal from '../ShoppingItemListModal';
 
 export interface ShoppingItemListProps extends BoxProps { }
 

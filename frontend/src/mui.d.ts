@@ -5,6 +5,7 @@ declare module "@mui/material/styles" {
   interface TypographyVariants {
     veritoneLarge: React.CSSProperties;
     veritoneNunito: React.CSSProperties;
+    veritoneNunitoMedium: React.CSSProperties;
     veritoneNunitoSmall: React.CSSProperties;
     Nunito18pxSemiBold: React.CSSProperties;
 
@@ -14,6 +15,7 @@ declare module "@mui/material/styles" {
   interface TypographyVariantsOptions {
     veritoneLarge?: React.CSSProperties;
     veritoneNunito?: React.CSSProperties;
+    veritoneNunitoMedium?: React.CSSProperties;
     veritoneNunitoSmall?: React.CSSProperties;
     Nunito18pxSemiBold?: React.CSSProperties;
   }
@@ -22,6 +24,7 @@ declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     veritoneLarge: true;
     veritoneNunito: true;
+    veritoneNunitoMedium: true;
     veritoneNunitoSmall: true;
     Nunito18pxSemiBold: true;
   }
@@ -37,6 +40,10 @@ declare module "@mui/material/styles" {
       main: string;
       contrastText: string;
     };
+    veritoneTextVariant: {
+      primary: string;
+      secondary: string;
+    }
   }
 
   interface PaletteOptions {
@@ -47,6 +54,10 @@ declare module "@mui/material/styles" {
     veritoneLight?: {
       main: string;
       contrastText: string;
+    };
+    veritoneTextVariant?: {
+      primary: string;
+      secondary: string;
     };
   }
 }

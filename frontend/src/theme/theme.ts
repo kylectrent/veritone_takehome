@@ -7,7 +7,7 @@ const theme = createTheme({
             light: "#1871E8",
         },
         secondary: {
-            main: "#1565c0",
+            main: "#7D7A7A",
         },
         text: {
             primary: "#0f172a",
@@ -24,6 +24,10 @@ const theme = createTheme({
             main: "#1871E8",
             contrastText: "#fff",
         },
+        veritoneTextVariant: {
+            primary: '#2A323C',
+            secondary: '#5C6269'
+        }
     },
 
     typography: {
@@ -41,6 +45,14 @@ const theme = createTheme({
             fontWeight: 400,
             fontSize: "18px",
             lineHeight: "24px",
+            letterSpacing: "0px",
+            textAlign: "center",
+        },
+        veritoneNunitoMedium: {
+            fontFamily: "Nunito",
+            fontWeight: 600,
+            fontSize: "16px",
+            lineHeight: "20px",
             letterSpacing: "0px",
             textAlign: "center",
         },

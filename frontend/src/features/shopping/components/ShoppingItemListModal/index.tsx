@@ -1,15 +1,16 @@
 import { Button, Dialog, DialogActions, DialogContent, Stack, Typography } from '@mui/material'
 import LastPageIcon from '@mui/icons-material/LastPage';
 import VeritoneButton from '../VeritoneButton';
+import { useShoppingItemList } from '../../context/ShoppingItemListContext';
 
 export interface ShoppingItemListModalProps {
     open: boolean;
     onClose: () => void;
-    isEdit: boolean;
     children: React.ReactNode;
+    mutationActionTitle: string;
 }
 
-function ShoppingItemListModal({ open, onClose, isEdit, children }: ShoppingItemListModalProps) {
+function ShoppingItemListModal({ open, onClose, mutationActionTitle, children }: ShoppingItemListModalProps) {
     return (
         <Dialog
             open={open}
@@ -25,7 +26,7 @@ function ShoppingItemListModal({ open, onClose, isEdit, children }: ShoppingItem
             <DialogActions>
                 <Button>Cancel</Button>
                 <VeritoneButton>
-                    <Typography variant={'veritoneNunitoSmall'}>{isEdit ? 'Add Task' : 'Save Item'}</Typography>
+                    <Typography variant={'veritoneNunitoSmall'}>{mutationActionTitle}</Typography>
                 </VeritoneButton>
             </DialogActions>
         </Dialog>
