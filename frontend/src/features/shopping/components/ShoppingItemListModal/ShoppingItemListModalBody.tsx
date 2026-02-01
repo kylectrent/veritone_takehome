@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material"
 import type { ShoppingProductResponse } from "../../../../api/model"
+import { Controller, useForm } from 'react-hook-form'
 
 export type ShoppingItemFormValues = {
     name: string
@@ -24,6 +25,16 @@ function ShoppingItemListModalBody({ modalBodyHeader, modalBodySubheader, editin
         quantity: editingProduct?.quantity ?? 1,
         purchased: editingProduct?.purchased ?? false
     }
+
+    const {
+        control,
+        watch,
+        reset,
+        formState: { errors, isValid },
+    } = useForm<ShoppingItemFormValues>({
+        defaultValues,
+        mode: 'onChange',
+    });
 
      
 
