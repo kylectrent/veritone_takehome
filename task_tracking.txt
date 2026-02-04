@@ -1,0 +1,2 @@
+- fix the prod compose command
+- fix failing java tests

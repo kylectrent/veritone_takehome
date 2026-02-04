@@ -51,6 +51,7 @@ export function useCreateShoppingProduct() {
   });
 
   return {
+    // Non async version, for optimistic update pattern
     create: (data: ShoppingProductRequest) => m.mutate({ data }),
     createAsync: (data: ShoppingProductRequest) => m.mutateAsync({ data }),
 
