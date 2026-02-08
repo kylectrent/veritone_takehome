@@ -1,2 +1,4 @@
 - fix the prod compose command
-- fix failing java tests
+- fix failing java tests (DONE)
+- toast notification component to display user friendly api response messages
+- modal loading state

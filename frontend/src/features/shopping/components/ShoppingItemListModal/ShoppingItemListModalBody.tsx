@@ -1,8 +1,9 @@
 import { Box, FormControl, FormHelperText, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
 import type { ShoppingProductRequest, ShoppingProductResponse } from "../../../../api/model"
 import { Controller, useForm } from 'react-hook-form'
-import { useCreateShoppingProduct } from "../../api/hooks"
 import { useMemo } from "react"
+import { MAX_DESC } from "../../../../util/constants"
+import type { ShoppingProductSubmitFn } from "../../types/types"
 
 export type ShoppingItemFormValues = {
     name: string
@@ -12,13 +13,21 @@ export type ShoppingItemFormValues = {
 
 export interface ShoppingItemListModalBodyProps {
     modalBodyHeader: string;
-    modalBodySubheader: string
-    editingProduct?: ShoppingProductResponse | null
+    modalBodySubheader: string;
+    onSubmitRequest: ShoppingProductSubmitFn;
+    formId: string;
+    editingProduct?: ShoppingProductResponse | null;
+    onSuccess?: () => void;
 }
 
-const MAX_DESC = 100
-
-function ShoppingItemListModalBody({ modalBodyHeader, modalBodySubheader, editingProduct }: ShoppingItemListModalBodyProps) {
+function ShoppingItemListModalBody({
+    modalBodyHeader,
+    modalBodySubheader,
+    editingProduct,
+    formId,
+    onSubmitRequest,
+    onSuccess,
+}: ShoppingItemListModalBodyProps) {
 
     const defaultValues: ShoppingItemFormValues = {
         name: editingProduct?.name ?? '',
@@ -28,15 +37,13 @@ function ShoppingItemListModalBody({ modalBodyHeader, modalBodySubheader, editin
 
     const {
         control,
-        /*reset,*/
+        reset,
         handleSubmit,
         formState: { errors, /*isValid*/ },
     } = useForm<ShoppingItemFormValues>({
         defaultValues,
         mode: 'onChange',
     });
-
-    const { createAsync, /*isPending*/ } = useCreateShoppingProduct();
 
     const onSubmit = async (values: ShoppingItemFormValues) => {
         const payload: ShoppingProductRequest = {
@@ -45,7 +52,12 @@ function ShoppingItemListModalBody({ modalBodyHeader, modalBodySubheader, editin
             quantity: Number(values.quantity) || 1,
         }
 
-        await createAsync(payload);
+        await onSubmitRequest(payload)
+
+        // clear fields after a successful submit
+        reset({ name: '', description: '', quantity: 1 })
+
+        onSuccess?.()
     }
 
     const qtyOptions = useMemo(() => Array.from({ length: 20 }, (_, i) => i + 1), [])
@@ -62,7 +74,7 @@ function ShoppingItemListModalBody({ modalBodyHeader, modalBodySubheader, editin
             </Stack>
 
             {/* form fields */}
-            <Stack component='form' onSubmit={handleSubmit(onSubmit)}>
+            <Stack component='form' onSubmit={handleSubmit(onSubmit)} id={formId} >
                 <Controller
                     name="name"
                     control={control}
@@ -134,7 +146,7 @@ function ShoppingItemListModalBody({ modalBodyHeader, modalBodySubheader, editin
                                 value={field.value ?? 1}
                                 displayEmpty
                                 renderValue={(val) => {
-                                    if (!val) return <span>How many?</span>
+                                    if (!val) return <span>{'How many?'}</span>
                                     return String(val)
                                 }}
                                 inputProps={{ 'aria-label': 'Quantity' }}

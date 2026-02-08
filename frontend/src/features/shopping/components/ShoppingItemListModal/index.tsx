@@ -8,24 +8,25 @@ export interface ShoppingItemListModalProps {
     onClose: () => void;
     children: React.ReactNode;
     mutationActionTitle: string;
+    formId: string;
 }
 
-function ShoppingItemListModal({ open, onClose, mutationActionTitle, children }: ShoppingItemListModalProps) {
+function ShoppingItemListModal({ open, onClose, mutationActionTitle, formId, children }: ShoppingItemListModalProps) {
     return (
         <Dialog
             open={open}
             onClose={onClose}
         >
             <Stack direction='row'>
-                <Typography variant={'veritoneLarge'}>SHOPPING LIST</Typography>
+                <Typography variant={'veritoneLarge'}>{'SHOPPING LIST'}</Typography>
                 <LastPageIcon fontSize="small" />
             </Stack>
             <DialogContent>
                 {children}
             </DialogContent>
             <DialogActions>
-                <Button>Cancel</Button>
-                <VeritoneButton >
+                <Button onClick={onClose}>{'Cancel'}</Button>
+                <VeritoneButton type="submit" form={formId}>
                     <Typography variant={'veritoneNunitoSmall'}>{mutationActionTitle}</Typography>
                 </VeritoneButton>
             </DialogActions>
