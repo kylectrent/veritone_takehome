@@ -3,12 +3,8 @@ import type { ShoppingProductResponse } from "../../../api/model"
 
 
 type ShoppingItemListContextValue = {
-    editingProduct: ShoppingProductResponse | null
-    setEditingProduct: React.Dispatch<
-        React.SetStateAction<ShoppingProductResponse | null>
-    >
-    openEdit: (product: ShoppingProductResponse) => void
-    closeEdit: () => void
+    editingProduct: ShoppingProductResponse | null;
+    setEditingProduct: React.Dispatch<React.SetStateAction<ShoppingProductResponse | null>>;
 }
 
 const ShoppingItemListContext = createContext<ShoppingItemListContextValue | null>(
@@ -27,8 +23,6 @@ export function ShoppingItemListProvider({
         () => ({
             editingProduct,
             setEditingProduct,
-            openEdit: (product) => setEditingProduct(product),
-            closeEdit: () => setEditingProduct(null),
         }),
         [editingProduct]
     )
