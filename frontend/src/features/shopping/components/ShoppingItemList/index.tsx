@@ -6,12 +6,12 @@ import { useShoppingItemListModal } from '../../context/ShoppingItemListModalCon
 export interface ShoppingItemListProps extends BoxProps { }
 
 function ShoppingItemList({ children, ...props }: ShoppingItemListProps) {
-    const { setAddModalOpen } = useShoppingItemListModal();
+    const { openAddModal } = useShoppingItemListModal();
     return (
         <Box {...props} width={1025} pt={4}>
             <Stack direction={'row'} pb={1}>
                 <Typography variant={'Nunito18pxSemiBold'}>Your Items</Typography>
-                <VeritoneButton sx={{ marginLeft: 'auto' }} onClick={() => setAddModalOpen(true)} >
+                <VeritoneButton sx={{ marginLeft: 'auto' }} onClick={() => openAddModal()} >
                     <Typography variant={'veritoneNunitoSmall'}>Add Item</Typography>
                 </VeritoneButton>
             </Stack>
