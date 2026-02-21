@@ -63,3 +63,19 @@ export function useCreateShoppingProduct() {
     reset: m.reset,
   }
 }
+
+export function useUpdateShoppingProduct() {
+  const queryClient = useQueryClient();
+  const queryKey = getGetAllVeritoneShoppingProductsQueryKey();
+
+  const m = useUpdateVeritoneShoppingProduct({
+    mutation: {
+      // Optimistic update
+      onMutate: async ({ id, data }) => {
+
+      },
+      // Rollback on error
+      // Commit server result optionally refetch
+    },
+  });
+}

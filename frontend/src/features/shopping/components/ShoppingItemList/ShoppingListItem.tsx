@@ -2,6 +2,7 @@ import { type ListItemProps, Box, Checkbox, IconButton, ListItem, ListItemText }
 import type { ShoppingProductResponse } from '../../../../api/model';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useShoppingItemList } from '../../context/ShoppingItemListContext';
 
 export interface ShoppingListItemProps extends ListItemProps {
   item: ShoppingProductResponse;
@@ -9,12 +10,15 @@ export interface ShoppingListItemProps extends ListItemProps {
 
 // Checking the checkbox should trigger the edit mutation
 function ShoppingListItem({ item, ...props }: ShoppingListItemProps) {
+
+  const { setEditingProduct } = useShoppingItemList();
+
   return (
     <ListItem
       disableGutters
       secondaryAction={
         <Box>
-          <IconButton>
+          <IconButton onClick={() => setEditingProduct(item)}>
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton>

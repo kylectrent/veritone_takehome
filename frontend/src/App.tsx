@@ -28,7 +28,7 @@ function App() {
 
   const submitEditRequest = useCallback(
     async (req: ShoppingProductRequest) => {
-      // you’ll implement update hook next
+      // implement update hook next
       return Promise.resolve();
     },
     []
